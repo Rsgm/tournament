@@ -8,8 +8,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-class TournamentConfig extends Configuration {@NotEmpty
-private String template;
+class TournamentConfig extends Configuration {
+    @Valid
+    @NotNull
+    @JsonProperty
+    private DataSourceFactory database = new DataSourceFactory();
+
+    @NotEmpty
+    private String template;
 
     @NotEmpty
     private String defaultName = "Stranger";
@@ -32,5 +38,9 @@ private String template;
     @JsonProperty
     public void setDefaultName(String name) {
         this.defaultName = name;
+    }
+
+    public DataSourceFactory getDataSourceFactory() {
+        return database;
     }
 }

@@ -3,6 +3,7 @@ package tournament;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
 import tournament.health.TemplateHealthCheck;
 import tournament.resources.HelloWorldResource;
 
@@ -15,7 +16,7 @@ public class Tournament extends Application<TournamentConfig> {
 
     @Override
     public void initialize(Bootstrap<TournamentConfig> bootstrap) {
-
+        bootstrap.addBundle(new ViewBundle());
     }
 
     @Override
