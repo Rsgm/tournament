@@ -1,11 +1,18 @@
 package tournament;
 
 import io.dropwizard.Application;
-import io.dropwizard.Configuration;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import tournament.health.TemplateHealthCheck;
+import tournament.resources.HelloWorldResource;
 
-public class Tournament extends Application<Tournament.TournamentConfig> {
+public class Tournament extends Application<TournamentConfig> {
+
+    public static void main(String[] args) throws Exception {
+        new Tournament().run(args);
+    }
+
+
     @Override
     public void initialize(Bootstrap<TournamentConfig> bootstrap) {
 
@@ -14,11 +21,16 @@ public class Tournament extends Application<Tournament.TournamentConfig> {
     @Override
     public void run(TournamentConfig configuration, Environment environment) throws Exception {
 
+        final HelloWorldResource resource = new HelloWorldResource(
+                configuration.getTemplate(),
+                configuration.getDefaultName()
+        );
+
+        final TemplateHealthCheck healthCheck = new TemplateHealthCheck(configuration.getTemplate());
+
+        environment.healthChecks().register("template", healthCheck);
+        environment.jersey().register(resource);
     }
 
-    protected class TournamentConfig extends Configuration {
-        protected TournamentConfig() {
 
-        }
-    }
 }

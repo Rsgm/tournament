@@ -22,6 +22,14 @@ project(":core") {
 
     dependencies {
         compile 'io.dropwizard:dropwizard-core:0.7.1'
+        compile 'io.dropwizard:dropwizard-auth:0.7.1'
+        compile 'io.dropwizard:dropwizard-assets:0.7.1'
+        compile 'io.dropwizard:dropwizard-spdy:0.7.1'
+        compile 'io.dropwizard:dropwizard-hibernate:0.7.1'
+        compile 'io.dropwizard:dropwizard-migrations:0.7.1'
+        compile 'io.dropwizard:dropwizard-views-freemarker:0.7.1'
+        compile 'io.dropwizard:dropwizard-views-mustache:0.7.1'
+        compile 'com.h2database:h2:1.4.178'
     }
 }
 
