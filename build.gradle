@@ -1,3 +1,7 @@
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "java"
+
 buildscript {
     repositories {
         mavenCentral()
@@ -5,34 +9,24 @@ buildscript {
     }
 }
 
-allprojects {
-    apply plugin: "eclipse"
-    apply plugin: "idea"
+sourceCompatibility = 1.6
+sourceSets.main.java.srcDirs = ["src/"]
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-    }
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
 }
 
-project(":core") {
-    apply plugin: "java"
-
-    dependencies {
-        compile 'io.dropwizard:dropwizard-core:0.7.1'
-        compile 'io.dropwizard:dropwizard-auth:0.7.1'
-        compile 'io.dropwizard:dropwizard-assets:0.7.1'
-        compile 'io.dropwizard:dropwizard-spdy:0.7.1'
-        compile 'io.dropwizard:dropwizard-hibernate:0.7.1'
-        compile 'io.dropwizard:dropwizard-migrations:0.7.1'
-        compile 'io.dropwizard:dropwizard-views-freemarker:0.7.1'
-        compile 'io.dropwizard:dropwizard-views-mustache:0.7.1'
-        compile 'com.h2database:h2:1.4.178'
-    }
-}
-
-tasks.eclipse.doLast {
-    delete ".project"
+dependencies {
+    compile 'io.dropwizard:dropwizard-core:0.7.1'
+    compile 'io.dropwizard:dropwizard-auth:0.7.1'
+    compile 'io.dropwizard:dropwizard-assets:0.7.1'
+    compile 'io.dropwizard:dropwizard-spdy:0.7.1'
+    compile 'io.dropwizard:dropwizard-hibernate:0.7.1'
+    compile 'io.dropwizard:dropwizard-migrations:0.7.1'
+    compile 'io.dropwizard:dropwizard-views-freemarker:0.7.1'
+    compile 'io.dropwizard:dropwizard-views-mustache:0.7.1'
+    compile 'com.h2database:h2:1.4.178'
 }
