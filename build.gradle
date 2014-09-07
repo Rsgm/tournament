@@ -17,7 +17,7 @@ allprojects {
     }
 }
 
-project(":test") {
+project(":core") {
     apply plugin: "java"
 
     dependencies {
