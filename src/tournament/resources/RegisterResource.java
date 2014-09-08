@@ -1,8 +1,9 @@
 package tournament.resources;
 
-import com.codahale.metrics.annotation.Timed;
 import com.google.common.base.Optional;
+import io.dropwizard.hibernate.UnitOfWork;
 import tournament.core.Contestant;
+import tournament.db.ContestantDAO;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,20 +15,18 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/register")
 @Produces(MediaType.APPLICATION_JSON)
 public class RegisterResource {
-    private final String template;
-    private final String defaultName;
     private final AtomicLong counter;
+    private final String defaultName = "Unknown";
+    private final ContestantDAO dao;
 
-    public RegisterResource(String template, String defaultName) {
-        this.template = template;
-        this.defaultName = defaultName;
+    public RegisterResource(ContestantDAO dao) {
+        this.dao = dao;
         this.counter = new AtomicLong();
     }
 
     @GET
-    @Timed
+    @UnitOfWork
     public Contestant register(@QueryParam("name") Optional<String> name) {
-        final String value = String.format(template, name.or(defaultName));
-        return new Contestant(counter.incrementAndGet(), value);
+        return dao.create(new Contestant(counter.incrementAndGet(), name.or(defaultName)));
     }
 }

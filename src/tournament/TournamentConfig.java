@@ -40,7 +40,13 @@ class TournamentConfig extends Configuration {
         this.defaultName = name;
     }
 
+    @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
         return database;
+    }
+
+    @JsonProperty("database")
+    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
+        this.database = dataSourceFactory;
     }
 }
