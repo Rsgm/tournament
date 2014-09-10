@@ -1,15 +1,16 @@
 template: Hello, %s!
 defaultName: Stranger
 
+
 database:
   # the name of your JDBC driver
   driverClass: org.h2.Driver
 
   # the username
-  user: sa
+  user: test
 
   # the password
-  password: sa
+  password: 12345
 
   # the JDBC URL
-  url: jdbc:h2:./target/example
+  url: jdbc:h2:mem:test_db

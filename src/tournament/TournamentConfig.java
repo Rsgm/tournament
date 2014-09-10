@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 class TournamentConfig extends Configuration {
     @Valid
     @NotNull
-    @JsonProperty
+    @JsonProperty()
     private DataSourceFactory database = new DataSourceFactory();
 
     @NotEmpty

@@ -1,33 +1,21 @@
 package tournament.db;
 
-import com.google.common.base.Optional;
-import io.dropwizard.hibernate.AbstractDAO;
-import org.hibernate.SessionFactory;
-import tournament.core.Contestant;
+import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
-import java.util.List;
+public interface ContestantDAO {
+    @SqlUpdate("create table contestants (id int primary key, name varchar(100))")
+    void createContestantsTable();
 
-public class ContestantDAO extends AbstractDAO<Contestant> {
+    @SqlUpdate("insert into contestants (id, name) values (:id, :name)")
+    void insert(@Bind("id") int id, @Bind("name") String name);
+
+    @SqlQuery("select name from contestants where id = :id")
+    String findNameById(@Bind("id") Integer id);
 
     /**
-     * Creates a new DAO with a given session provider.
-     *
-     * @param sessionFactory a session provider
+     * close with no args is used to close the connection
      */
-    public ContestantDAO(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
-
-
-    public Optional<Contestant> findById(Long id) {
-        return Optional.fromNullable(get(id));
-    }
-
-    public Contestant create(Contestant contestant) {
-        return persist(contestant);
-    }
-
-    public List<Contestant> findAll() {
-        return list(namedQuery("tournament.core.Contestant.findAll"));
-    }
+    void close();
 }

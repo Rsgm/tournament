@@ -1,24 +1,15 @@
 package tournament.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "contestants")
-@NamedQueries({
-    @NamedQuery(
-        name = "tournament.core.Contestant.findAll",
-        query = "SELECT c FROM Contestant c"
-    )
-})
 public class Contestant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "name", nullable = false)
     private String name;
 
     public Contestant() {
@@ -30,11 +21,13 @@ public class Contestant {
         this.name = name;
     }
 
+    @Column(name = "id")
     @JsonProperty
     public long getId() {
         return id;
     }
 
+    @Column(name = "name")
     @JsonProperty
     public String getName() {
         return name;

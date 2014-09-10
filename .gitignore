@@ -26,3 +26,7 @@ build/
 *.iml
 *.ipr
 *.iws
+
+# Other #
+#########
+*.db
