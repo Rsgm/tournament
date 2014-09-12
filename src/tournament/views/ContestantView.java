@@ -11,5 +11,7 @@ public class ContestantView extends View{
         this.contestant = contestant;
     }
 
-
+    public Contestant getContestant() {
+        return contestant;
+    }
 }

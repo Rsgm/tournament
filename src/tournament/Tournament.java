@@ -10,6 +10,8 @@ import io.dropwizard.views.ViewBundle;
 import org.skife.jdbi.v2.DBI;
 import tournament.core.Contestant;
 import tournament.db.ContestantDAO;
+import tournament.resources.BetResource;
+import tournament.resources.ContestantResource;
 import tournament.resources.RegisterResource;
 
 public class Tournament extends Application<TournamentConfig> {
@@ -34,6 +36,8 @@ public class Tournament extends Application<TournamentConfig> {
         dao.createContestantsTable();
 
         environment.jersey().register(new RegisterResource(dao));
+        environment.jersey().register(new ContestantResource(dao));
+        environment.jersey().register(new BetResource(dao));
     }
 
     private final HibernateBundle<TournamentConfig> hibernate = new HibernateBundle<TournamentConfig>(Contestant.class) {

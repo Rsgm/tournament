@@ -27,7 +27,7 @@ public class RegisterResource {
     public Contestant register(@QueryParam("name") Optional<String> name) {
         Contestant contestant = new Contestant(counter.incrementAndGet(), name.or(defaultName));
         dao.insert((int) contestant.getId(), contestant.getName());
-        System.out.println("New contestant " + contestant.getId() + "  -  " + contestant.getName());
+        System.out.println("New contestant " + contestant.getId() + "  -  " + name);
         return contestant;
     }
 

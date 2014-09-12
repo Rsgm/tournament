@@ -1,18 +1,32 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Register</title>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                $("button").click(function(){
-                    $.post("/register", {name:$("#name").text()},function(data,status){alert("Data: " + data + "\nStatus: " + status);});
-                    window.location.replace("/contestant?id="+$("#name").text());
-                });
-            });
-        </script>
-    </head>
-    <body>
-        name: <input type="text" id="name"><br>
-        <button>Register</button>
-    </body>
+
+<head>
+
+<title>Register</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script>
+     function registerController($scope,$http) {
+         $scope.register = function() {
+             $http({
+                 method: 'POST',
+                 url: '/register?name=' + $scope.name,
+                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+             }).success(function (data) {
+                window.location.replace("/contestant?id=" + data.id);
+             });
+         };
+     };
+</script>
+</head>
+
+<body>
+
+<div ng-app="" ng-controller="registerController">
+name: <input type="text" ng-model="name"><br>
+<button ng-click="register()">Register</button><br>
+</div>
+
+</body>
 </html>

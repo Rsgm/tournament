@@ -11,6 +11,7 @@ public class Contestant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+    private int difficulty;
 
     public Contestant() {
         // Jackson deserialization
@@ -19,6 +20,8 @@ public class Contestant {
     public Contestant(long id, String name) {
         this.id = id;
         this.name = name;
+
+        difficulty = (int) (Math.random()*100);
     }
 
     @Column(name = "id")
@@ -31,5 +34,11 @@ public class Contestant {
     @JsonProperty
     public String getName() {
         return name;
+    }
+
+    @Column(name = "difficulty")
+    @JsonProperty
+    public int getDifficulty() {
+        return difficulty;
     }
 }

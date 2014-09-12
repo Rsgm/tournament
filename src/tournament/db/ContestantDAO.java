@@ -14,6 +14,9 @@ public interface ContestantDAO {
     @SqlQuery("select name from contestants where id = :id")
     String findNameById(@Bind("id") Integer id);
 
+    @SqlQuery("select name from contestants where difficulty = :difficulty")
+    int findDifficultyById(@Bind("difficulty") Integer difficulty);
+
     /**
      * close with no args is used to close the connection
      */

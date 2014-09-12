@@ -22,7 +22,6 @@ public class ContestantResource {
     }
 
     @GET
-    @UnitOfWork
     @Produces(MediaType.TEXT_HTML)
     public ContestantView getContestantView(@QueryParam("id") Optional<Integer> id) {
         return new ContestantView(new Contestant(id.or(0), contestantDAO.findNameById(id.or(0))));
