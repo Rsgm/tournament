@@ -11,6 +11,12 @@ import tournament.views.ResultsView;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+
+
+/*
+ * legal notice: This shall not be used for betting with any form of currency nor any objects of value.
+ */
+
 @Path("/register")
 @Produces(MediaType.TEXT_HTML)
 public class BetResource {

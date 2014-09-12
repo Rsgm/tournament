@@ -1,7 +1,8 @@
 package tournament.views;
 
-/**
- * Created by ryan on 9/12/14.
+/*
+ * legal notice: This shall not be used for betting with any form of currency nor any objects of value.
  */
+
 public class BetView {
 }
