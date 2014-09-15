@@ -5,7 +5,6 @@ import io.dropwizard.hibernate.UnitOfWork;
 import tournament.core.Contestant;
 import tournament.db.ContestantDAO;
 import tournament.views.BetView;
-import tournament.views.RegisterView;
 import tournament.views.ResultsView;
 
 import javax.ws.rs.*;
@@ -17,7 +16,7 @@ import javax.ws.rs.core.MediaType;
  * legal notice: This shall not be used for betting with any form of currency nor any objects of value.
  */
 
-@Path("/register")
+@Path("/bet")
 @Produces(MediaType.TEXT_HTML)
 public class BetResource {
     private final ContestantDAO dao;

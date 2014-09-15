@@ -12,6 +12,7 @@ import tournament.core.Contestant;
 import tournament.db.ContestantDAO;
 import tournament.resources.BetResource;
 import tournament.resources.ContestantResource;
+import tournament.resources.MainResource;
 import tournament.resources.RegisterResource;
 
 public class Tournament extends Application<TournamentConfig> {
@@ -38,6 +39,7 @@ public class Tournament extends Application<TournamentConfig> {
         environment.jersey().register(new RegisterResource(dao));
         environment.jersey().register(new ContestantResource(dao));
         environment.jersey().register(new BetResource(dao));
+        environment.jersey().register(new MainResource());
     }
 
     private final HibernateBundle<TournamentConfig> hibernate = new HibernateBundle<TournamentConfig>(Contestant.class) {

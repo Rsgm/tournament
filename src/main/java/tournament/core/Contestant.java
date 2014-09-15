@@ -21,7 +21,7 @@ public class Contestant {
         this.id = id;
         this.name = name;
 
-        difficulty = (int) (Math.random()*100);
+        difficulty = (int) (Math.random()*10);
     }
 
     @Column(name = "id")
