@@ -1,7 +1,10 @@
 package tournament.resources;
 
+import lombok.Data;
 import tournament.core.Contestant;
+import tournament.core.User;
 import tournament.db.ContestantDAO;
+import tournament.db.UserDAO;
 import tournament.views.RegisterView;
 
 import javax.ws.rs.GET;
@@ -11,30 +14,37 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Data
 @Path("/register")
 @Produces(MediaType.TEXT_HTML)
 public class RegisterResource {
-    private final AtomicLong counter;
+    private final AtomicLong counter = new AtomicLong();
     private final String defaultName = "Unknown";
-    private final ContestantDAO dao;
-
-    public RegisterResource(ContestantDAO dao) {
-        this.dao = dao;
-        this.counter = new AtomicLong();
-    }
+    private final ContestantDAO contestantDAO;
+    private final UserDAO userDAO;
+    private boolean registrationOpen = true;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Contestant register(Contestant contestant) {
-        int id = (int) counter.incrementAndGet();
-        System.out.println("New contestant " + id + "  -  " + contestant.getName());
-        dao.insert(id, contestant.getName());
-        return contestant;
+    public User register(User user) {
+        user.setId(counter.incrementAndGet());
+
+        if (user.getContestant().getName().isEmpty()) {
+            user.setContestant(null);
+        }
+
+        System.out.println("New user " + user.getId() + "  -  " + user.getName());
+        contestantDAO.insert((int) user.getId(), user.getName(), (int) (Math.random() * 10));
+        return user;
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     public RegisterView getRegisterView() {
-        return new RegisterView();
+        return new RegisterView(registrationOpen);
+    }
+
+    public void closeRegistration() {
+        registrationOpen = false;
     }
 }

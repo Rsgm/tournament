@@ -9,8 +9,8 @@ buildscript {
     }
 }
 
-sourceCompatibility = 1.6
-sourceSets.main.java.srcDirs = ["src/"]
+sourceCompatibility = 1.7
+sourceSets.main.java.srcDirs = ["src/main/java/"]
 
 repositories {
     mavenLocal()
@@ -30,4 +30,5 @@ dependencies {
     compile 'io.dropwizard:dropwizard-views-freemarker:0.7.1'
     compile 'io.dropwizard:dropwizard-views-mustache:0.7.1'
     compile 'com.h2database:h2:1.4.178'
+    compile 'org.projectlombok:lombok:1.14.8'
 }

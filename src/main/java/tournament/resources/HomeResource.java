@@ -1,7 +1,7 @@
 package tournament.resources;
 
 
-import tournament.views.MainView;
+import tournament.views.HomeView;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,14 +10,14 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/")
 @Produces(MediaType.TEXT_HTML)
-public class MainResource {
+public class HomeResource {
 
-    public MainResource() {
+    public HomeResource() {
     }
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public MainView getMainView() {
-        return new MainView();
+    public HomeView getHomeView() {
+        return new HomeView();
     }
 }

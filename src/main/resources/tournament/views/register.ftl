@@ -1,34 +1,24 @@
-<!DOCTYPE html>
-<html>
+<#-- @ftlvariable name="registrationOpen" type="java.lang.Boolean" -->
+<#assign title="Register">
+<#assign ngAppName="app">
+<#assign ngController="register as vm">
 
-<head>
-    <title>Register</title>
+<#assign scripts>
+<script src="/app/register.js"></script>
+</#assign>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<#assign content>
+    <#if registrationOpen>
+    Name: <input type="text" ng-model="vm.name"><br>
+    Password: <input type="password" ng-model="vm.password"><br><br>
 
-    <script>
-        function registerController($scope, $http, $window) {
-            $scope.register = function () {
-                $http({
-                    method: 'POST',
-                    url: '/register',
-                    data: {name: $scope.name}
-                }).success(function (data) {
-                    $window.location.replace("/contestant?id=" + data.id);
-                });
-            }
-        }
-    </script>
-</head>
+    <input type="checkbox" ng-model="vm.competing"> Competing?<br>
+    Competition name: <input type="text" ng-model="vm.contestantName" ng-show="vm.competing" ng-disable="vm.competing"><br><br>
 
-<body>
+    <button ng-click="vm.postInfo()">Register</button>
+    <#else>
+    Registration is closed.
+    </#if>
+</#assign>
 
-<div ng-app="" ng-controller="registerController">
-    name: <input type="text" ng-model="name"><br>
-    <button ng-click="register()">Register</button>
-    <br>
-</div>
-
-</body>
-</html>
+<#include "template.ftl" parse=true>

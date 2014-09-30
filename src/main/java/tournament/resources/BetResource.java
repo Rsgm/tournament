@@ -1,51 +1,54 @@
 package tournament.resources;
 
 import com.google.common.base.Optional;
-import io.dropwizard.hibernate.UnitOfWork;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import tournament.core.Contestant;
 import tournament.db.ContestantDAO;
+import tournament.db.UserDAO;
 import tournament.views.BetView;
 import tournament.views.ResultsView;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-
-
 /*
  * legal notice: This shall not be used for betting with any form of currency nor any objects of value.
  */
 
+@Data
 @Path("/bet")
 @Produces(MediaType.TEXT_HTML)
 public class BetResource {
-    private final ContestantDAO dao;
-
-    public BetResource(ContestantDAO dao) {
-        this.dao = dao;
-    }
+    private final ContestantDAO contestantDAO;
+    private final UserDAO userDAO;
+    private boolean bettingOpen = false;
 
     @POST
     @Produces(MediaType.TEXT_HTML)
     public ResultsView register(@QueryParam("id1") Optional<Integer> id1, @QueryParam("id2") Optional<Integer> id2) {
         double random = Math.random();
 
-        int d1 = dao.findDifficultyById(id1.get());
-        int d2 = dao.findDifficultyById(id2.get());
+        Contestant c1 = contestantDAO.findById(id1.get());
+        Contestant c2 = contestantDAO.findById(id2.get());
 
-        int winner = 0;
-        if (d1 > d2) {
-            winner = d2 / ((double) d1) >= random ? id2.get() : id1.get(); // horrible win calculator
+        Contestant winner = null;
+        if (c1.getDifficulty() > c2.getDifficulty()) {
+            winner = c2.getDifficulty() / ((double) c1.getDifficulty()) / 2d >= random ? c2 : c1; // not as bad of a win calculator
         } else {
-            winner = d1 / ((double) d2) >= random ? id1.get() : id2.get();
+            winner = c1.getDifficulty() / ((double) c2.getDifficulty()) / 2d >= random ? c1 : c2;
         }
-        return new ResultsView(new Contestant(winner, dao.findNameById(winner)));
+        return new ResultsView(winner);
     }
 
     @GET
-    @UnitOfWork
     @Produces(MediaType.TEXT_HTML)
     public BetView getRegisterView() {
-        return new BetView();
+        return new BetView(bettingOpen);
+    }
+
+    public void openBetting() {
+        bettingOpen = true;
     }
 }

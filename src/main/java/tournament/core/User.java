@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contestant {
+public class User {
     @Id
     @JsonProperty
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +24,21 @@ public class Contestant {
     @JsonProperty
     private String name;
     @JsonProperty
-    private int difficulty;
+    private int password;
     @JsonProperty
-    private int opponent;
+    private Contestant contestant;
 
-    static public class ContestantMapper implements ResultSetMapper<Contestant> {
+    public User(int id, String name, int password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
+
+    static public class UserMapper implements ResultSetMapper<User> {
         @Override
-        public Contestant map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-            return new Contestant(r.getInt("id"), r.getString("name"), r.getInt("difficulty"), r.getInt("opponent"));
+        public User map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+            return new User(r.getInt("id"), r.getString("name"), r.getInt("password"));
         }
     }
 }
